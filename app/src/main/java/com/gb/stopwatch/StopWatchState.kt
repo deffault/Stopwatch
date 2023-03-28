@@ -1,7 +1,5 @@
 package com.gb.stopwatch
 
-import com.gb.stopwatch.ui.StopwatchState
-
 sealed class StopWatchState {
     data class Paused(
         val elapsedTime: Long
