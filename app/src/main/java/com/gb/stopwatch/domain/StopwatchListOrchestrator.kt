@@ -1,4 +1,4 @@
-package com.gb.stopwatch
+package com.gb.stopwatch.domain
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.StateFlow
 
 class StopwatchListOrchestrator(
     private val stopwatchStateHolder: StopwatchStateHolder,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope = CoroutineScope(
+        Dispatchers.Main + SupervisorJob()
+    )
 ) {
 
     private var job: Job? = null

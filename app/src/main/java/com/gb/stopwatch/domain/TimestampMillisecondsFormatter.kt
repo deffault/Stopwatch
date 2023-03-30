@@ -1,4 +1,4 @@
-package com.gb.stopwatch
+package com.gb.stopwatch.domain
 
 class TimestampMillisecondsFormatter {
 
@@ -9,6 +9,7 @@ class TimestampMillisecondsFormatter {
         val minutes = seconds / 60
         val minutesFormatted = (minutes % 60).pad(2)
         val hours = minutes / 60
+
         return if (hours > 0) {
             val hoursFormatted = (minutes / 60).pad(2)
             "$hoursFormatted:$minutesFormatted:$secondsFormatted"
