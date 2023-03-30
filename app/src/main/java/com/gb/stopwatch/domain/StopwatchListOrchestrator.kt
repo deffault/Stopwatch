@@ -16,12 +16,15 @@ class StopwatchListOrchestrator(
     val ticker: StateFlow<String> = mutableTicker
 
     fun start() {
-        if (job == null) startJob()
+        if (job == null) {
+            println("VVV Job is NULL")
+            startJob()
+        }
         stopwatchStateHolder.start()
     }
 
     private fun startJob() {
-        scope.launch {
+        job = scope.launch {
             while (isActive) {
                 mutableTicker.value = stopwatchStateHolder.getStringTimeRepresentation()
                 delay(20)
