@@ -17,16 +17,9 @@ val appModule = module {
         )
     }
 
-    single<StopwatchStateCalculator> {
-        StopwatchStateCalculator(
-            timestampProvider = get(),
-            elapsedTimeCalculator = get()
-        )
-    }
-
     single<StopwatchStateHolder> {
         StopwatchStateHolder(
-            stopwatchStateCalculator = get(),
+            timestampProvider = get(),
             elapsedTimeCalculator = get(),
             timestampMillisecondsFormatter = get()
         )

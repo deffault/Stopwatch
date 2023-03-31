@@ -3,20 +3,27 @@ package com.gb.stopwatch.domain
 import com.gb.stopwatch.StopWatchState
 
 class StopwatchStateHolder(
-    private val stopwatchStateCalculator: StopwatchStateCalculator,
+    private val timestampProvider: TimestampProvider,
     private val elapsedTimeCalculator: ElapsedTimeCalculator,
     private val timestampMillisecondsFormatter: TimestampMillisecondsFormatter
 ) {
 
-    var currentState: StopWatchState = StopWatchState.Paused(0)
-        private set
+    private var currentState: StopWatchState = StopWatchState.Paused(0)
 
     fun start() {
-        currentState = stopwatchStateCalculator.calculateRunningState(currentState)
+        if (currentState !is StopWatchState.Running) {
+            currentState = StopWatchState.Running(
+                startTime = timestampProvider.getMilliseconds(),
+                elapsedTime = (currentState as StopWatchState.Paused).elapsedTime
+            )
+        }
     }
 
     fun pause() {
-        currentState = stopwatchStateCalculator.calculatePausedState(currentState)
+        if (currentState !is StopWatchState.Paused) {
+            val elapsedTime = elapsedTimeCalculator.calculate(currentState as StopWatchState.Running)
+            currentState = StopWatchState.Paused(elapsedTime = elapsedTime)
+        }
     }
 
     fun stop() {

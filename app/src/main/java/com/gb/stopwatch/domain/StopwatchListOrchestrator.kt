@@ -17,7 +17,6 @@ class StopwatchListOrchestrator(
 
     fun start() {
         if (job == null) {
-            println("VVV Job is NULL")
             startJob()
         }
         stopwatchStateHolder.start()
